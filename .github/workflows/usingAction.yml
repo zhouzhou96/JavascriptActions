@@ -19,9 +19,12 @@ jobs:
         id: hello
 
         with:
-          who-to-greet: 'Mona the Octocat'
+          who-to-greet: 'GG'
 
       # Use the output from the `hello` step
-      
+
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
+          echo "The time was ${{ steps.hello.outputs.time1 }}"
+          echo "The time was ${{ steps.hello.outputs.time2 }}"
+          echo "The time was ${{ steps.hello.outputs.time3 }}"
