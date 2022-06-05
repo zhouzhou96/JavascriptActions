@@ -10,11 +10,13 @@ jobs:
 
     steps:
       - name: Hello world action step
-        id: hello
+
+        id: fuck
+
         uses: zhouzhou96/JavascriptActions@v1.1
         with:
           who-to-greet: 'JOJO'
-          
+
       # Use the output from the `hello` step
       - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+        run: echo "The time was ${{ steps.fuck.outputs.time }}"
