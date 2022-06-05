@@ -6,6 +6,8 @@ try {
     const nameToGreet = core.getInput('who-to-greet');
     console.log(`Hello ${nameToGreet}!`);
 
+    core.debug('1111111111111111111111111111111111111111111111')
+
     const time = (new Date()).toTimeString();
     core.setOutput("time", time);
 
