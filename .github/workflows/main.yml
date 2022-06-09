@@ -20,7 +20,7 @@ jobs:
         # Did you forget to run actions/checkout before running your local action?
         # 结论 不能单独依赖index.js文件, "zhouzhou96/JavascriptActions@main"指向此文件夹的 action.yml 文件
 
-        #uses: zhouzhou96/JavascriptActions@main
+        uses: zhouzhou96/JavascriptActions@main
 
       # Use the output from the `hello` step
       - name: outputs value
@@ -33,6 +33,5 @@ jobs:
           echo "RUNNER_REPOSITORY === ${{ steps.odc.outputs.RUNNER_REPOSITORY }}"
 
   load-env-value-2:
-
     uses: zhouzhou96/JavascriptActions/.github/wrokflows/usingAction.yml@main
 
