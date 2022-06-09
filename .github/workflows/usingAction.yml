@@ -1,11 +1,11 @@
-on: [push]
+on:
+  workflow_dispatch:
+  workflow_call:
 
 jobs:
-  hello_world_job:
+  called:
 
     runs-on: ubuntu-latest
-
-    name: A job to say hello
 
     steps:
       # To use this repository's private action,
@@ -14,17 +14,16 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Hello world action step
-        uses: ./ # Uses an action in the root directory
+        # Uses an action in the root directory
+        uses: ./ 
 
         id: hello
-
-        with:
-          who-to-greet: 'GG'
 
       # Use the output from the `hello` step
 
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
-          echo "The time was ${{ steps.hello.outputs.time1 }}"
-          echo "The time was ${{ steps.hello.outputs.time2 }}"
-          echo "The time was ${{ steps.hello.outputs.time3 }}"
+          echo "The time was ${{ steps.hello.outputs.HELLOWORLD_JAR_NAME }}"
+          echo "The time was ${{ steps.HELLOWORLD_JAR_VERSION }}"
+          echo "The time was ${{ steps.hello.outputs.HELLOWORLD_JAR_ADDERSS }}"
+          echo "The time was ${{ steps.hello.outputs.RUNNER_REPOSITORY }}"
