@@ -3,7 +3,7 @@ on:
 
 jobs:
 
-  hello_world_job:
+  load-env-value-1:
 
     runs-on: ubuntu-latest
 
@@ -16,12 +16,13 @@ jobs:
 
         uses: zhouzhou96/JavascriptActions@main
 
-
       # Use the output from the `hello` step
       - name: outputs value
 
-        run: echo "The time was ${{ steps.odc.outputs.time }}"
-          echo "The time was ${{ steps.odc.outputs.HELLOWORLD_JAR_NAME }}"
-          echo "The time was ${{ steps.odc.outputs.HELLOWORLD_JAR_VERSION }}"
-          echo "The time was ${{ steps.odc.outputs.HELLOWORLD_JAR_ADDERSS }}"
-          echo "The time was ${{ steps.odc.outputs.RUNNER_REPOSITORY }}"
+        run: |
+          echo "The time was ${{ steps.odc.outputs.time }}"
+          echo "HELLOWORLD_JAR_NAME === ${{ steps.odc.outputs.HELLOWORLD_JAR_NAME }}"
+          echo "HELLOWORLD_JAR_VERSION === ${{ steps.odc.outputs.HELLOWORLD_JAR_VERSION }}"
+          echo "HELLOWORLD_JAR_ADDERSS === ${{ steps.odc.outputs.HELLOWORLD_JAR_ADDERSS }}"
+          echo "RUNNER_REPOSITORY === ${{ steps.odc.outputs.RUNNER_REPOSITORY }}"
+
