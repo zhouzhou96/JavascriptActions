@@ -14,7 +14,7 @@ jobs:
 
         id: fuck
 
-        uses: zhouzhou96/JavascriptActions@v1.1
+        uses: zhouzhou96/JavascriptActions@main
         with:
           who-to-greet: 'JOJO'
 
