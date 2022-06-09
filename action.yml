@@ -1,23 +1,13 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
-
-inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-  who-to-greet1:  # id of input
-    required: true
-    default: 'World1'
-  who-to-greet2:  # id of input
-    required: true
-    default: 'World2'
+name: 'env-value'
 
 outputs:
   time: # id of output
     description: 'The time we greeted you'
-  time3:
-    description: 'The time we greeted you'
+  HELLOWORLD_JAR_NAME:
+  HELLOWORLD_JAR_VERSION:
+  HELLOWORLD_JAR_ADDERSS:
+  RUNNER_REPOSITORY:
+    
     
 runs:
   using: 'node16'

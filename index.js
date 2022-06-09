@@ -1,27 +1,18 @@
 const core = require('@actions/core')
-const github = require('@actions/github')
-
-try {
-
-    const nameToGreet = core.getInput('who-to-greet');
-    console.log(`Hello ${nameToGreet}!`);
-    const nameToGreet1 = core.getInput('who-to-greet1');
-    console.log(`Hello ${nameToGreet1}!`);
-    const nameToGreet2 = core.getInput('who-to-greet2');
-    console.log(`Hello ${nameToGreet2}!`);
 
     const time = "1111111111111111111111111";
     core.setOutput("time", time);
-    core.setOutput("time1", "time1");
-    core.setOutput("time2", "time2");
-    core.setOutput("time3", "time3");
 
-    // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
-    console.log(`The event payload: ${payload}`);
 
-  } catch (error) {
+    const HELLOWORLD_JAR_NAME = 'helloWorld'
+    core.setOutput("HELLOWORLD_JAR_NAME", HELLOWORLD_JAR_NAME);
 
-    core.setFailed(error.message);
-    
-}
+    const HELLOWORLD_JAR_VERSION = '0.0.1-SNAPSHOT'
+    core.setOutput("HELLOWORLD_JAR_VERSION", HELLOWORLD_JAR_VERSION);
+
+    const HELLOWORLD_JAR_ADDERSS = 'http://artifactrepo-dev:8082/artifactory/int_maven_dev/com/study'
+    core.setOutput("HELLOWORLD_JAR_ADDERSS", HELLOWORLD_JAR_ADDERSS);
+
+    const RUNNER_REPOSITORY = '/appl/idf/script/ODC/repository'
+    core.setOutput("RUNNER_REPOSITORY", RUNNER_REPOSITORY);
+
