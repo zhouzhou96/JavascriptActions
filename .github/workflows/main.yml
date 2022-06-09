@@ -33,5 +33,5 @@ jobs:
           echo "RUNNER_REPOSITORY === ${{ steps.odc.outputs.RUNNER_REPOSITORY }}"
 
   load-env-value-2:
-    uses: ./.github/wrokflows/usingAction.yml@main
+    uses: zhouzhou96/JavascriptActions/.github/workflows/usingAction.yml@main
 
