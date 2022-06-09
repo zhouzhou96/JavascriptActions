@@ -1,5 +1,5 @@
 const core = require('@actions/core')
-const {env} = require('./env.js')
+const env = require('./env.js')
 
     const time = "1111111111111111111111111";
     core.setOutput("time", time);
