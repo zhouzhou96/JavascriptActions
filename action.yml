@@ -4,10 +4,13 @@ outputs:
   time: # id of output
     description: 'The time we greeted you'
   HELLOWORLD_JAR_NAME:
+    description: 'JAR包名字'
   HELLOWORLD_JAR_VERSION:
+    description: 'JAR版本'
   HELLOWORLD_JAR_ADDERSS:
+    description: 'JAR包路径'
   RUNNER_REPOSITORY:
-    
+    description: 'runner仓库'
     
 runs:
   using: 'node16'
