@@ -7,9 +7,21 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    name: load and using env
+
     steps:
+      - name: load env value
+
+        id: odc
+
+        uses: zhouzhou96/JavascriptActions@main
+
 
       # Use the output from the `hello` step
       - name: outputs value
-        id: odc
-        run: echo "The time was ${{ steps.fuck.outputs.time }}"
+
+        run: echo "The time was ${{ steps.odc.outputs.time }}"
+          echo "The time was ${{ steps.odc.outputs.HELLOWORLD_JAR_NAME }}"
+          echo "The time was ${{ steps.odc.outputs.HELLOWORLD_JAR_VERSION }}"
+          echo "The time was ${{ steps.odc.outputs.HELLOWORLD_JAR_ADDERSS }}"
+          echo "The time was ${{ steps.odc.outputs.RUNNER_REPOSITORY }}"
