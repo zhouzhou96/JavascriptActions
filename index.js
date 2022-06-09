@@ -10,7 +10,7 @@ try {
     const nameToGreet2 = core.getInput('who-to-greet2');
     console.log(`Hello ${nameToGreet2}!`);
 
-    const time = (new Date()).toTimeString();
+    const time = "1111111111111111111111111";
     core.setOutput("time", time);
     core.setOutput("time1", "time1");
     core.setOutput("time2", "time2");
