@@ -16,12 +16,7 @@ inputs:
 outputs:
   time: # id of output
     description: 'The time we greeted you'
-  time1: # id of output
-    description: 'The time we greeted you'
-  time2: # id of output
-    description: 'The time we greeted you'
-  time3: # id of output
-    description: 'The time we greeted you'
+
     
 runs:
   using: 'node16'
