@@ -23,3 +23,8 @@ jobs:
         echo 'Checkout source code succeeded.'
         echo 'The address of checkout is ${{ github.workspace }}.'
         echo 'Next step will build source code.'
+
+    - name: variable 
+        run: |
+          echo 'checkout source code 使用到的变量'
+          echo 'github.workspace  -------------->  ${{ github.workspace }}'
