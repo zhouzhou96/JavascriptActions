@@ -26,30 +26,32 @@ on:
       
 jobs:
   push-image-artifactory-job:
-    runs-on: [ self-hosted ]
+
+#    runs-on: [ self-hosted ]
+    run-on: ubuntu-latest
     steps:
     
     - name: load env
       id: loadenv
       uses: ./.github/actions/env
     
-    - name: Docker login JFrog Artifactory
-      run:  |
-        sudo docker login https://${{ secrets.REGISTRY_URL }}
-        echo 'Login jfrog artifactory succeeded.'
-      
-    - name: Push to JFrog Artifactory
-      run:  |
-        sudo docker push ${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}
-        echo 'Push docker image to jfrog artifactory succeeded.'
-        echo 'The address of jfrog artifactory image is: ${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}'
-        echo 'Next step will deploy jfrog artifactory image to openshift'
+#    - name: Docker login JFrog Artifactory
+#      run:  |
+#        sudo docker login https://${{ secrets.REGISTRY_URL }}
+#        echo 'Login jfrog artifactory succeeded.'
+#      
+#    - name: Push to JFrog Artifactory
+#     run:  |
+#        sudo docker push ${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}
+#        echo 'Push docker image to jfrog artifactory succeeded.'
+#        echo 'The address of jfrog artifactory image is: ${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}'
+#        echo 'Next step will deploy jfrog artifactory image to openshift'
 
       
-    - name: Remove Docker temp image
-      run:  |
-        sudo docker rmi ${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}  
-        echo 'Remove docker temp image succeeded.'
+#    - name: Remove Docker temp image
+#      run:  |
+#        sudo docker rmi ${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}  
+#        echo 'Remove docker temp image succeeded.'
         
     - name: laod env
       run:  |
@@ -57,5 +59,14 @@ jobs:
         echo 'REGISTRY_REPOSITORY----------------${{ github.event.inputs.REGISTRY_REPOSITORY }}'
         echo 'REGISTRY_REPOS_TAG_NAME----------------${{ github.event.inputs.REGISTRY_REPOS_TAG_NAME }}'
         echo 'REGISTRY_REPOS_TAG_VERSION----------------${{ github.event.inputs.REGISTRY_REPOS_TAG_VERSION }}'
+
+    - name: variable 
+      run: |
+        echo 'push image artifactory 使用到的变量'
+
+        echo 'steps.loadenv.outputs.REGISTRY_URL  ---------------->  ${{ steps.loadenv.outputs.REGISTRY_URL }}'
+        echo 'github.event.inputs.REGISTRY_REPOSITORY  ---------------->  ${{ github.event.inputs.REGISTRY_REPOSITORY }}'
+        echo 'github.event.inputs.REGISTRY_REPOS_TAG_NAME  ---------------->  ${{ github.event.inputs.REGISTRY_REPOS_TAG_NAME }}'
+        echo 'github.event.inputs.REGISTRY_REPOS_TAG_VERSION  ---------------->  ${{ github.event.inputs.REGISTRY_REPOS_TAG_VERSION }}'
 
 
