@@ -1,9 +1,9 @@
    
 name: build-docker-image
 
-env:
-  JAR_NAME: helloWorld
-  JAR_VERSION: 0.0.1-SNAPSHOT
+#env:
+#  JAR_NAME: helloWorld
+#  JAR_VERSION: 0.0.1-SNAPSHOT
 
 on:
   workflow_dispatch:
@@ -32,20 +32,22 @@ on:
 
 jobs:
   build-docker-image:
+
     runs-on: self-hosted
+
     steps:
     
     - name: load env
       id: loadenv
       uses: ./.github/actions/env
 
-    - name: Build the Docker image
-      run:  |
-         sudo docker build --no-cache -t '${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}' -f Dockerfile .
-         echo 'Build docker image succeeded.'
-         echo 'The information of docker image by below:'
-         docker image ls -f reference="${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}"
-         echo 'Next step will push docker image to jfrog artifactory .'
+#    - name: Build the Docker image
+#      run:  |
+#         sudo docker build --no-cache -t '${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}' -f Dockerfile .
+#         echo 'Build docker image succeeded.'
+#         echo 'The information of docker image by below:'
+#         docker image ls -f reference="${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}"
+#        echo 'Next step will push docker image to jfrog artifactory .'
 
          
     - name: env load
@@ -61,5 +63,17 @@ jobs:
 
 #    - name: Clean up old code
 #      run: rm -r ${{ github.workspace }}/target/${{ env.HELLOWORLD_JAR_NAME }}-${{ env.HELLOWORLD_JAR_VERSION }}.jar
+
+    - name: variable 
+        run: |
+          echo 'build docker image 使用到的变量'
+
+          echo 'steps.loadenv.outputs.REGISTRY_URL  ---------->  ${{ steps.loadenv.outputs.REGISTRY_URL }}'
+          echo 'github.event.inputs.REGISTRY_REPOSITORY-----------${{ github.event.inputs.REGISTRY_REPOSITORY }}'
+          echo 'github.event.inputs.REGISTRY_REPOS_TAG_NAME------------${{ github.event.inputs.REGISTRY_REPOS_TAG_NAME }}'
+          echo 'github.event.inputs.REGISTRY_REPOS_TAG_VERSION ------------------${{ github.event.inputs.REGISTRY_REPOS_TAG_VERSION }}'
+          echo 'github.workspace--------------------${{ github.workspace }}'
+          echo 'steps.loadenv.outputs.JAR_NAME-----------------${{ steps.loadenv.outputs.JAR_NAME }}'
+          echo 'steps.loadenv.outputs.JAR_VERSION--------------------${{ steps.loadenv.outputs.JAR_VERSION }}'
  
   
