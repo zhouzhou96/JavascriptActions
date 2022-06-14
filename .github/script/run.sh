@@ -1,5 +1,6 @@
-env=/appl/idf/script/ODC/actions-runner/_work/ODC-GithubAction/ODC-GithubAction/.github/script/env_reset.yaml
+#env=/appl/idf/script/ODC/actions-runner/_work/ODC-GithubAction/ODC-GithubAction/.github/script/env_reset.yaml
 
+env=/home/runner/work/JavascriptActions/JavascriptActions
 
 registry_url=$(cat $env | sed 's/,/\n/g' | grep "registry_url" | sed 's/=/\n/g' | sed '1d' | sed 's/}//g')
 openshift_server=$(cat $env | sed 's/,/\n/g' | grep "openshift_server" | sed 's/=/\n/g' | sed '1d' | sed 's/}//g')
