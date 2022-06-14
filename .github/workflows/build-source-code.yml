@@ -44,12 +44,14 @@ jobs:
       run: |
         echo 'Build source code succeeded.'
         echo 'The jar address of build is ${{ github.workspace }}/target/${{ steps.loadenv.outputs.HELLOWORLD_JAR_NAME }}-${{ steps.loadenv.outputs.HELLOWORLD_JAR_VERSION }}.jar'.
-        echo 'The jar is deployed to JFrog Artifactory.The adderss is ${{ steps.loadenv.outputs.HELLOWORLD_JAR_ADDERSS }}/${{ steps.loadenv.outputs.HELLOWORLD_JAR_NAME }}/${{ steps.loadenv.outputs.HELLOWORLD_JAR_ADDERSS }}.'
+        echo 'The jar is deployed to JFrog Artifactory.The adderss is ${{ steps.loadenv.outputs.HELLOWORLD_JAR_ADDERSS }}/${{ steps.loadenv.outputs.HELLOWORLD_JAR_NAME }}/${{ steps.loadenv.outputs.HELLOWORLD_JAR_VERSION }}.'
         echo 'Next step will build docker image.'
-        echo "HELLOWORLD_JAR_NAME === ${{ steps.loadenv.outputs.HELLOWORLD_JAR_NAME }}"
-        echo "HELLOWORLD_JAR_VERSION === ${{ steps.loadenv.outputs.HELLOWORLD_JAR_VERSION }}"
-        echo "HELLOWORLD_JAR_ADDERSS === ${{ steps.loadenv.outputs.HELLOWORLD_JAR_ADDERSS }}"
-        echo "RUNNER_REPOSITORY === ${{ steps.loadenv.outputs.RUNNER_REPOSITORY }}"
-        echo 'loadenv.OPENSHIFT_SERVER----------------- ${{ steps.loadenv.outputs.OPENSHIFT_SERVER }}'
-        echo 'loadenv.REGISTRY_URL----------------- ${{ steps.loadenv.outputs.REGISTRY_URL }}'
-
+    
+    - name: variable 
+        run: |
+          echo 'build source code 使用到的变量'
+          echo 'github.workspace  -------------->  ${{ github.workspace }}'
+          echo 'steps.loadenv.outputs.RUNNER_REPOSITORY  -------------->  ${{ steps.loadenv.outputs.RUNNER_REPOSITORY }}'
+          echo 'steps.loadenv.outputs.HELLOWORLD_JAR_NAME  -------------->  ${{ steps.loadenv.outputs.HELLOWORLD_JAR_NAME }}'
+          echo 'steps.loadenv.outputs.HELLOWORLD_JAR_VERSION  -------------->  ${{ steps.loadenv.outputs.HELLOWORLD_JAR_VERSION }}'
+          echo 'steps.loadenv.outputs.HELLOWORLD_JAR_ADDERSS  -------------->  ${{ steps.loadenv.outputs.HELLOWORLD_JAR_ADDERSS }}'
