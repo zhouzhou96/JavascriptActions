@@ -68,5 +68,10 @@ jobs:
         echo 'github.event.inputs.REGISTRY_REPOSITORY  ---------------->  ${{ github.event.inputs.REGISTRY_REPOSITORY }}'
         echo 'github.event.inputs.REGISTRY_REPOS_TAG_NAME  ---------------->  ${{ github.event.inputs.REGISTRY_REPOS_TAG_NAME }}'
         echo 'github.event.inputs.REGISTRY_REPOS_TAG_VERSION  ---------------->  ${{ github.event.inputs.REGISTRY_REPOS_TAG_VERSION }}'
-
-
+    
+    - name: using command
+      run: |
+        echo 'build docker image 使用到的指令'
+        echo 'Command: sudo docker login https://${{ steps.loadenv.outputs.REGISTRY_URL }}'
+        echo 'Command: sudo docker push ${{ steps.loadenv.outputs.REGISTRY_URL }}/${{ github.event.inputs.REGISTRY_REPOSITORY }}/${{ github.event.inputs.REGISTRY_REPOS_TAG_NAME }}:${{ github.event.inputs.REGISTRY_REPOS_TAG_VERSION }}'
+        echo 'Command: sudo docker rmi ${{ steps.loadenv.outputs.REGISTRY_URL }}/${{ github.event.inputs.REGISTRY_REPOSITORY }}/${{ github.event.inputs.REGISTRY_REPOS_TAG_NAME }}:${{ github.event.inputs.REGISTRY_REPOS_TAG_VERSION }}'
