@@ -31,7 +31,7 @@ runs:
   
     - name: sue shell
       run: |
-        chmod 744 /appl/idf/script/ODC/actions-runner/_work/ODC-GithubAction/ODC-GithubAction/.github/script/run.sh
+        chmod 744 ${{ github.workspace }}/.github/script/run.sh
       shell: bash
       
     - name: run outputs
