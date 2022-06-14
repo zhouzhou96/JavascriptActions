@@ -50,10 +50,10 @@ jobs:
         echo 'Next step will build docker image.'
     
     - name: variable 
-        run: |
-          echo 'build source code 使用到的变量'
-          echo 'github.workspace  -------------->  ${{ github.workspace }}'
-          echo 'steps.loadenv.outputs.RUNNER_REPOSITORY  -------------->  ${{ steps.loadenv.outputs.RUNNER_REPOSITORY }}'
-          echo 'steps.loadenv.outputs.HELLOWORLD_JAR_NAME  -------------->  ${{ steps.loadenv.outputs.HELLOWORLD_JAR_NAME }}'
-          echo 'steps.loadenv.outputs.HELLOWORLD_JAR_VERSION  -------------->  ${{ steps.loadenv.outputs.HELLOWORLD_JAR_VERSION }}'
-          echo 'steps.loadenv.outputs.HELLOWORLD_JAR_ADDERSS  -------------->  ${{ steps.loadenv.outputs.HELLOWORLD_JAR_ADDERSS }}'
+      run: |
+        echo 'build source code 使用到的变量'
+        echo 'github.workspace  -------------->  ${{ github.workspace }}'
+        echo 'steps.loadenv.outputs.RUNNER_REPOSITORY  -------------->  ${{ steps.loadenv.outputs.RUNNER_REPOSITORY }}'
+        echo 'steps.loadenv.outputs.HELLOWORLD_JAR_NAME  -------------->  ${{ steps.loadenv.outputs.HELLOWORLD_JAR_NAME }}'
+        echo 'steps.loadenv.outputs.HELLOWORLD_JAR_VERSION  -------------->  ${{ steps.loadenv.outputs.HELLOWORLD_JAR_VERSION }}'
+        echo 'steps.loadenv.outputs.HELLOWORLD_JAR_ADDERSS  -------------->  ${{ steps.loadenv.outputs.HELLOWORLD_JAR_ADDERSS }}'

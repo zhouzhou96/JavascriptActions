@@ -54,16 +54,16 @@ jobs:
 #      run: rm -r ${{ github.workspace }}/target/${{ env.HELLOWORLD_JAR_NAME }}-${{ env.HELLOWORLD_JAR_VERSION }}.jar
 
     - name: variable 
-        run: |
-          echo 'build docker image 使用到的变量'
+      run: |
+        echo 'build docker image 使用到的变量'
 
-          echo 'steps.loadenv.outputs.REGISTRY_URL  ---------->  ${{ steps.loadenv.outputs.REGISTRY_URL }}'
-          echo 'github.event.inputs.REGISTRY_REPOSITORY-----------${{ github.event.inputs.REGISTRY_REPOSITORY }}'
-          echo 'github.event.inputs.REGISTRY_REPOS_TAG_NAME------------${{ github.event.inputs.REGISTRY_REPOS_TAG_NAME }}'
-          echo 'github.event.inputs.REGISTRY_REPOS_TAG_VERSION ------------------${{ github.event.inputs.REGISTRY_REPOS_TAG_VERSION }}'
-          echo 'github.workspace--------------------${{ github.workspace }}'
-          echo 'steps.loadenv.outputs.JAR_NAME-----------------${{ steps.loadenv.outputs.JAR_NAME }}'
-          echo 'steps.loadenv.outputs.JAR_VERSION--------------------${{ steps.loadenv.outputs.JAR_VERSION }}'
+        echo 'steps.loadenv.outputs.REGISTRY_URL  ---------->  ${{ steps.loadenv.outputs.REGISTRY_URL }}'
+        echo 'github.event.inputs.REGISTRY_REPOSITORY-----------${{ github.event.inputs.REGISTRY_REPOSITORY }}'
+        echo 'github.event.inputs.REGISTRY_REPOS_TAG_NAME------------${{ github.event.inputs.REGISTRY_REPOS_TAG_NAME }}'
+        echo 'github.event.inputs.REGISTRY_REPOS_TAG_VERSION ------------------${{ github.event.inputs.REGISTRY_REPOS_TAG_VERSION }}'
+        echo 'github.workspace--------------------${{ github.workspace }}'
+        echo 'steps.loadenv.outputs.JAR_NAME-----------------${{ steps.loadenv.outputs.JAR_NAME }}'
+        echo 'steps.loadenv.outputs.JAR_VERSION--------------------${{ steps.loadenv.outputs.JAR_VERSION }}'
 
     - name: using command
       run: |
