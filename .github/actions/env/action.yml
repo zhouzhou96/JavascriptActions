@@ -3,27 +3,27 @@ outputs:
 
   HELLOWORLD_JAR_NAME:    
     description: 'JAR包名字'  
-    value: ${{ steps.env.outputs.jar-name }}
+    value: ${{ steps.env.outputs.jar_name }}
 
   HELLOWORLD_JAR_VERSION:    
     description: 'JAR版本'  
-    value: ${{ steps.env.outputs.jar-version }}
+    value: ${{ steps.env.outputs.jar_version }}
 
   HELLOWORLD_JAR_ADDERSS:    
     description: 'JAR包路径'  
-    value: ${{ steps.env.outputs.jar-adderss }}
+    value: ${{ steps.env.outputs.jar_adderss }}
 
   RUNNER_REPOSITORY:    
     description: 'runner仓库'
-    value: ${{ steps.env.outputs.runner-repository }}
+    value: ${{ steps.env.outputs.runner_repository }}
     
   OPENSHIFT_SERVER:
     description: 'openshift login server'
-    value: ${{ steps.env.outputs.openshift-server }}
+    value: ${{ steps.env.outputs.openshift_server }}
       
   REGISTRY_URL:
     description: 'artifactory registry url'
-    value: ${{ steps.env.outputs.registry-url }}
+    value: ${{ steps.env.outputs.registry_url }}
 
 runs:
   using: "composite"
