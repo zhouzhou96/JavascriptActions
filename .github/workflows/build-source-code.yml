@@ -36,9 +36,10 @@ jobs:
       
 #    - name: delete runner server local maven repository 
 #      run: rm -rf ${{ steps.loadenv.outputs.RUNNER_REPOSITORY }}/*
-      
-    - name: Publish to JFrog Artifactory
-      run: mvn deploy -s settings.xml
+
+#    测试变量，先注释      
+#    - name: Publish to JFrog Artifactory
+#      run: mvn deploy -s settings.xml
         
     - name: Build source code result
       run: |
