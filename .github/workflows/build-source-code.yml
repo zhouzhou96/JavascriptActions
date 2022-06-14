@@ -19,10 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: load env
-      id: loadenv
-      uses: ./.github/actions/env
-      
 #     - name: Clean up old code
 #       run:  rm -rf ${{ github.workspace }}/*
       
@@ -41,6 +37,10 @@ jobs:
 #    测试变量，先注释      
 #    - name: Publish to JFrog Artifactory
 #      run: mvn deploy -s settings.xml
+
+    - name: load env
+      id: loadenv
+      uses: ./.github/actions/env
         
     - name: Build source code result
       run: |
