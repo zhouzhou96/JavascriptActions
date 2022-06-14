@@ -1,0 +1,90 @@
+# This workflow will build source code, build docker image,push docker image to JFrog Artifactory, pull image to openshift by uses actions.
+
+name: deploy-openshift-dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      openshift-token:
+        required: true
+        type: string
+      openshift-app-name:
+        required: true
+        type: string
+      REGISTRY_REPOS_TAG_NAME:
+        required: true
+        type: string
+      REGISTRY_REPOS_TAG_VERSION:
+        required: true
+        type: string
+      REGISTRY_REPOSITORY:
+        required: true
+        type: string
+        default: int_docker_dev/projects/idf
+      OPENSHIFT_NAMESPACE:
+        required: true
+        type: string
+        default: idf-corp-vs-dev-1
+      MOUNT_PATH:
+        required: true
+        type: string
+        default: /appl/logs
+      CLAIM_NAME:
+        required: true
+        type: string
+        default: oc-create-pvc1
+
+jobs:
+
+#  get-env-parameter:
+#    uses: IDF/ODC-GithubAction/.github/workflows/env-parameter.yml@dev_parameter
+    
+  call-checkout-source-code:
+    uses: IDF/ODC-GithubAction/.github/workflows/checkout-source-code.yml@dev_parameter
+    
+  call-build-source-code:
+    needs: call-checkout-source-code
+    uses: IDF/ODC-GithubAction/.github/workflows/build-source-code.yml@dev_parameter
+#      
+#  call-build-docker-image:
+#    needs: call-build-source-code
+#    uses: IDF/ODC-GithubAction/.github/workflows/build-docker-image.yml@dev_parameter
+#    secrets:
+#      REGISTRY_URL: ${{ secrets.REGISTRY_URL }}
+#      REGISTRY_REPOSITORY: ${{ secrets.REGISTRY_REPOSITORY }}
+#      REGISTRY_REPOS_TAG_NAME: ${{ secrets.REGISTRY_REPOS_TAG_NAME }}
+#      REGISTRY_REPOS_TAG_VERSION: ${{ secrets.REGISTRY_REPOS_TAG_VERSION }}
+#    
+#  call-push-image-artifactory:
+#    needs: call-build-docker-image
+#    uses: IDF/ODC-GithubAction/.github/workflows/push-image-artifactory.yml@dev_parameter
+#    secrets:
+#      REGISTRY_URL: ${{ secrets.REGISTRY_URL }}
+#      REGISTRY_REPOSITORY: ${{ secrets.REGISTRY_REPOSITORY }}
+#      REGISTRY_REPOS_TAG_NAME: ${{ secrets.REGISTRY_REPOS_TAG_NAME }}
+#      REGISTRY_REPOS_TAG_VERSION: ${{ secrets.REGISTRY_REPOS_TAG_VERSION }}
+
+  call-pull-image-openshift:
+#    needs: get-env-parameter
+    uses: IDF/ODC-GithubAction/.github/workflows/pull-image-openshift.yml@dev_parameter
+#    secrets:
+#      OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+#      OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+#      OPENSHIFT_APP_NAME: ${{ secrets.OPENSHIFT_APP_NAME }}
+#      REGISTRY_URL: ${{ secrets.REGISTRY_URL }}
+#      REGISTRY_REPOSITORY: ${{ secrets.REGISTRY_REPOSITORY }}
+#      REGISTRY_REPOS_TAG_NAME: ${{ secrets.REGISTRY_REPOS_TAG_NAME }}
+#      REGISTRY_REPOS_TAG_VERSION: ${{ secrets.REGISTRY_REPOS_TAG_VERSION }}
+#      OPENSHIFT_NAMESPACE: ${{ secrets.OPENSHIFT_NAMESPACE }}
+    with:
+      openshift-token: ${{ github.event.inputs.OPENSHIFT_TOKEN }}
+      openshift-app-name: ${{ github.event.inputs.OPENSHIFT_APP_NAME }}
+      REGISTRY_REPOS_TAG_NAME: ${{ github.event.inputs.REGISTRY_REPOS_TAG_NAME }}
+      REGISTRY_REPOS_TAG_VERSION: ${{ github.event.inputs.REGISTRY_REPOS_TAG_VERSION }}
+      REGISTRY_REPOSITORY: ${{ github.event.inputs.REGISTRY_REPOSITORY }}
+      OPENSHIFT_NAMESPACE: ${{ github.event.inputs.OPENSHIFT_NAMESPACE }}
+      MOUNT_PATH: ${{ github.event.inputs.MOUNT_PATH }}
+      CLAIM_NAME: ${{ github.event.inputs.CLAIM_NAME }}
+
+
+  

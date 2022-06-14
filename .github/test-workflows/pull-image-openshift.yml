@@ -1,0 +1,26 @@
+# This workflow will pull image to openshift by uses actions.
+
+name: pull-image-openshift
+env:
+  # 🖊️ EDIT to set the kube context's namespace after login. Leave blank to use your user's default namespace.
+  OPENSHIFT_NAMESPACE: ${{secrets.OPENSHIFT_NAMESPACE}}
+
+on:
+  workflow_dispatch:
+
+jobs:
+  pull-image-openshift-job:
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull JFrog Artifactory image to openshift
+        run: |
+          oc login --token=${{secrets.OPENSHIFT_TOKEN}} --server=${{ secrets.OPENSHIFT_SERVER }}
+          oc delete all -l app='${{ secrets.OPENSHIFT_APP_NAME }}'  
+          oc new-app --name=${{ secrets.OPENSHIFT_APP_NAME }} --docker-image='${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}' -n ${{ env.OPENSHIFT_NAMESPACE }}
+          echo "All services should be up and running now."
+          echo "Exposing artifactory route to outside."
+          oc expose svc/${{ secrets.OPENSHIFT_APP_NAME }}
+          echo "Helloworld artifactory is up and running."
+          echo "Access Helloworld by follow url:"
+          oc get route ${{ secrets.OPENSHIFT_APP_NAME }}

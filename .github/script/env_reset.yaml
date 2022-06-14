@@ -1,0 +1,6 @@
+registry_url=artifactrepo-dev:10743,
+openshift_server=https://api.tstcld61.server.ha.org.hk:6443,
+jar_name=helloWorld,
+jar_version=0.0.1-SNAPSHOT,
+jar_adderss=http://artifactrepo-dev:10743/artifactory/int_maven_dev/com/study,
+runner_repository=/appl/idf/script/ODC/repository

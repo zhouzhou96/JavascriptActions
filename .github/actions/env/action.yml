@@ -1,0 +1,68 @@
+name: 'env-value'
+outputs:
+
+  HELLOWORLD_JAR_NAME:    
+    description: 'JAR包名字'  
+    value: ${{ steps.env.outputs.jar-name }}
+
+  HELLOWORLD_JAR_VERSION:    
+    description: 'JAR版本'  
+    value: ${{ steps.env.outputs.jar-version }}
+
+  HELLOWORLD_JAR_ADDERSS:    
+    description: 'JAR包路径'  
+    value: ${{ steps.env.outputs.jar-adderss }}
+
+  RUNNER_REPOSITORY:    
+    description: 'runner仓库'
+    value: ${{ steps.env.outputs.runner-repository }}
+    
+  OPENSHIFT_SERVER:
+    description: 'openshift login server'
+    value: ${{ steps.env.outputs.openshift-server }}
+      
+  REGISTRY_URL:
+    description: 'artifactory registry url'
+    value: ${{ steps.env.outputs.registry-url }}
+
+runs:
+  using: "composite"
+  steps:
+  
+    - name: sue shell
+      run: |
+        chmod 744 /appl/idf/script/ODC/actions-runner/_work/ODC-GithubAction/ODC-GithubAction/.github/script/run.sh
+      shell: bash
+      
+    - name: run outputs
+      id: env
+      run: ./.github/script/run.sh
+      shell: bash
+    
+    
+    
+    
+#    - id: HELLOWORLD_JAR_NAME
+#      run: echo "::set-output name=jar-name::$(echo 'helloWorld')"
+#      shell: bash
+      
+#    - id: HELLOWORLD_JAR_VERSION
+#      run: echo "::set-output name=jar-version::$(echo '0.0.1-SNAPSHOT')"
+#      shell: bash
+    
+#    - id: HELLOWORLD_JAR_ADDERSS
+#      run: echo "::set-output name=jar-adderss::$(echo 'http://artifactrepo-dev:8082/artifactory/int_maven_dev/com/study')"
+#      shell: bash
+    
+#    - id: RUNNER_REPOSITORY
+#      run: echo "::set-output name=runner-repository::$(echo '/appl/idf/script/ODC/repository')"
+#      shell: bash
+      
+#    - id: REGISTRY_URL
+#      run: echo "::set-output name=registry-url::$(echo 'artifactrepo-dev:10743')"
+#      shell: bash
+      
+#    - id: OPENSHIFT_SERVER
+#      run: echo "::set-output name=openshift-server::$(echo 'https://api.tstcld61.server.ha.org.hk:6443')"
+#      shell: bash
+  

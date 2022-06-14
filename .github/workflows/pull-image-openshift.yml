@@ -1,0 +1,147 @@
+# This workflow will pull image to openshift by uses actions.
+
+name: pull-image-openshift
+
+env:
+  MOUNT_PATH: /appl/logs
+  CLAIM_NAME: oc-create-pvc1
+  OPENSHIFT_SERVER: https://api.tstcld61.server.ha.org.hk:6443
+  REGISTRY_URL: artifactrepo-dev:10743
+
+on:
+  workflow_dispatch:
+    inputs:
+      openshift-token:
+        required: true
+        type: string
+      openshift-app-name:
+        required: true
+        type: string
+      REGISTRY_REPOS_TAG_NAME:
+        required: true
+        type: string
+      REGISTRY_REPOS_TAG_VERSION:
+        required: true
+        type: string
+      REGISTRY_REPOSITORY:
+        required: true
+        type: string
+        default: int_docker_dev/projects/idf
+      OPENSHIFT_NAMESPACE:
+        required: true
+        type: string
+        default: idf-corp-vs-dev-1
+      MOUNT_PATH:
+        required: true
+        type: string
+        default: /appl/logs
+      CLAIM_NAME:
+        required: true
+        type: string
+        default: oc-create-pvc1
+        
+        
+        
+  workflow_call:
+#    secrets:
+#      OPENSHIFT_TOKEN:
+#        required: true
+#      OPENSHIFT_SERVER:
+#        required: true
+#      OPENSHIFT_APP_NAME:
+#        required: true
+#      REGISTRY_URL:
+#        required: true
+#      REGISTRY_REPOSITORY:
+#        required: true
+#      REGISTRY_REPOS_TAG_NAME:
+#        required: true
+#      REGISTRY_REPOS_TAG_VERSION:
+#        required: true
+#      OPENSHIFT_NAMESPACE:
+#        required: true
+    inputs:
+      openshift-token:
+        required: true
+        type: string
+      openshift-app-name:
+        required: true
+        type: string
+      REGISTRY_REPOS_TAG_NAME:
+        required: true
+        type: string
+      REGISTRY_REPOS_TAG_VERSION:
+        required: true
+        type: string
+      REGISTRY_REPOSITORY:
+        required: true
+        type: string
+      OPENSHIFT_NAMESPACE:
+        required: true
+        type: string
+      MOUNT_PATH:
+        required: true
+        type: string
+        default: /appl/logs
+      CLAIM_NAME:
+        required: true
+        type: string
+
+jobs:
+#  get-env-parameter-dispatch:
+#    if: github.event.inputs.openshift-token != null
+#    uses: IDF/ODC-GithubAction/.github/workflows/env-parameter2.yml@dev_parameter
+    
+  pull-image-openshift-job:
+    if: github.event.inputs.openshift-token != null
+    runs-on: self-hosted
+    steps:
+      - name: load env
+        id: loadenv
+        uses: ./.github/actions/env
+         
+      - name: Pull JFrog Artifactory image to openshift
+        run: |
+          oc login --token=${{ github.event.inputs.openshift-token }} --server=${{ env.OPENSHIFT_SERVER }}
+          oc delete all -l app='${{ github.event.inputs.openshift-app-name }}'  
+          # create PVC
+          oc apply -f ${{ github.workspace }}/src/main/resources/yaml/createPvc.yaml
+          oc new-app --name=${{ github.event.inputs.openshift-app-name }} --docker-image='${{ env.REGISTRY_URL }}/${{ github.event.inputs.REGISTRY_REPOSITORY }}/${{ github.event.inputs.REGISTRY_REPOS_TAG_NAME }}:${{ github.event.inputs.REGISTRY_REPOS_TAG_VERSION }}' -n ${{ github.event.inputs.OPENSHIFT_NAMESPACE }}
+          # bound PVC 
+          oc set volumes deployment/${{ github.event.inputs.openshift-app-name }} --add --mount-path=${{ github.event.inputs.MOUNT_PATH }} --claim-name=${{ github.event.inputs.CLAIM_NAME }}
+          oc set volumes deployment/${{ github.event.inputs.openshift-app-name }}
+          echo "All services should be up and running now."
+          echo "Exposing artifactory route to outside."
+          oc expose svc/${{ github.event.inputs.openshift-app-name }}
+          echo "Helloworld artifactory is up and running."
+          echo "Access Helloworld by follow url:"
+          oc get route ${{ github.event.inputs.openshift-app-name }}
+          echo 'loadenv.OPENSHIFT_SERVER----------------- ${{ steps.loadenv.outputs.OPENSHIFT_SERVER }}'
+          echo 'loadenv.REGISTRY_URL----------------- ${{ steps.loadenv.outputs.REGISTRY_URL }}'
+          echo 'dispatch!!!!!'
+
+  pull-image-openshift-job-call:
+
+    if: github.event.inputs.openshift-token == null
+    runs-on: self-hosted
+    steps:
+      - name: Pull JFrog Artifactory image to openshift
+        run: |
+          oc login --token=${{ inputs.openshift-token }} --server=${{ inputs.OPENSHIFT_SERVER }}
+          oc delete all -l app='${{ inputs.openshift-app-name }}'  
+          # create PVC
+          oc apply -f ${{ github.workspace }}/src/main/resources/yaml/createPvc.yaml
+          oc new-app --name=${{ inputs.openshift-app-name }} --docker-image='${{ inputs.REGISTRY_URL }}/${{ inputs.REGISTRY_REPOSITORY }}/${{ inputs.REGISTRY_REPOS_TAG_NAME }}:${{ inputs.REGISTRY_REPOS_TAG_VERSION }}' -n ${{ inputs.OPENSHIFT_NAMESPACE }}
+          # bound PVC 
+          oc set volumes deployment/${{ inputs.openshift-app-name }} --add --mount-path=${{ inputs.MOUNT_PATH }} --claim-name=${{ inputs.CLAIM_NAME }}
+          oc set volumes deployment/${{ inputs.openshift-app-name }}
+          echo "All services should be up and running now."
+          echo "Exposing artifactory route to outside."
+          oc expose svc/${{ inputs.openshift-app-name }}
+          echo "Helloworld artifactory is up and running."
+          echo "Access Helloworld by follow url:"
+          oc get route ${{ inputs.openshift-app-name }}
+          echo 'build docker image ${{ inputs.REGISTRY_URL }}'
+          echo 'pull image openshift ${{ inputs.OPENSHIFT_SERVER }}'
+
+

@@ -1,0 +1,25 @@
+# This workflow will checkout source code from github respository.
+name: checkout source code
+
+on:
+  workflow_dispatch:
+
+  workflow_call:
+
+jobs:
+  checkout-source-code-job:
+  
+    runs-on: [ self-hosted ]
+    
+    steps:
+    
+#    - name: Clean up old code
+#      run:  rm -rf ${{ github.workspace }}/*
+
+
+    - uses: actions/checkout@v2
+    - name: checkout source code
+      run:  |
+        echo 'Checkout source code succeeded.'
+        echo 'The address of checkout is ${{ github.workspace }}.'
+        echo 'Next step will build source code.'

@@ -1,0 +1,21 @@
+# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
+name: 'build-source-code'
+
+runs:
+  using: "composite"
+  steps:
+  
+    #- name: Build with Maven
+    #  run: mvn clean package -Dmaven.test.skip=true
+      
+    - name: Publish to JFrog Artifactory
+      run: mvn deploy
+      shell: bash
+        
+    - name: Build source code result
+      run: |
+        echo 'Build source code succeeded.'
+        echo 'The jar address of build is ${{ ENV.ACTIONS_RUNNER_FOLDER }}/_work/ODC-GithubAction/ODC-GithubAction/target/helloWorld-0.0.1-SNAPSHOT.jar'
+        echo 'The jar is deployed to JFrog Artifactory.The adderss is http://artifactrepo-dev:8082/artifactory/int_docker_dev/projects/idf/com/study/helloWorld/0.0.1-SNAPSHOT.'
+        echo 'Next step will build docker image.'
+      shell: bash

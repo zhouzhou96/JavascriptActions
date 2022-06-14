@@ -1,0 +1,16 @@
+name: 'Checkout source code'
+  
+runs:
+  using: "composite"
+  steps:
+    #- name: Clean up old code
+    #  run:  rm -rf ${{ ENV.ACTIONS_RUNNER_FOLDER }}/_work/ODC-GithubAction/ODC-GithubAction/*
+    #  shell: bash
+      
+    - uses: actions/checkout@v2
+    - name: checkout source code
+      run:  |
+        echo 'Checkout source code succeeded.'
+        echo 'The address of checkout is ${{ ENV.ACTIONS_RUNNER_FOLDER }}/_work/ODC-GithubAction/ODC-GithubAction.'
+        echo 'Next step will build source code.'
+      shell: bash

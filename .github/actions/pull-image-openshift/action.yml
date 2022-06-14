@@ -1,0 +1,23 @@
+# This workflow will pull image to openshift by uses actions.
+
+name: 'pull-image-openshift'
+env:
+  # 🖊️ EDIT to set the kube context's namespace after login. Leave blank to use your user's default namespace.
+  OPENSHIFT_NAMESPACE: "idf-corp-vs-dev-1"
+
+jobs:
+runs:
+  using: "composite"
+
+  steps:
+      - name: Pull JFrog Artifactory image to openshift
+        run: |
+          oc login --token=${{secrets.OPENSHIFT_TOKEN}} --server=${{ secrets.OPENSHIFT_SERVER }}
+          oc new-app --name=odc-githubaction --docker-image='https://api.tstcld61.server.ha.org.hk:6443' -n idf-corp-vs-dev-1
+          echo "All services should be up and running now."
+          echo "Exposing artifactory route to outside."
+          oc expose svc/idf-corp-vs-dev-1
+          echo "Helloworld artifactory is up and running."
+          echo "Access Helloworld by follow url:"
+          oc get route idf-corp-vs-dev-1
+        shell: bash

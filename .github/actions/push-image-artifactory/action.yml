@@ -1,0 +1,31 @@
+name: 'push-image-artifactory'
+
+#inputs:
+  #REGISTRY_USER:
+  #  required: true
+  #REGISTRY_PASSWORD:
+  #  required: true
+  
+
+runs:
+  using: "composite"
+  steps:
+    - name: Docker login JFrog Artifactory
+      run:  |
+        sudo docker login -u '${{ ENV.REGISTRY_USER }}' -p '${{ ENV.REGISTRY_PASSWORD }}' ${{ ENV.REGISTRY_URL }}
+        echo 'Login jfrog artifactory succeeded.'
+      shell: bash
+      
+    - name: Push to JFrog Artifactory
+      run:  |
+        sudo docker push ${{ ENV.REGISTRY_URL }}/${{ ENV.REGISTRY_REPOSITORY }}/${{ ENV.REGISTRY_REPOS_TAG_NAME }}:$REGISTRY_REPOS_TAG_VERSION
+        echo 'Push docker image to jfrog artifactory succeeded.'
+        echo 'The address of jfrog artifactory image is: ${{ ENV.REGISTRY_URL }}/${{ ENV.REGISTRY_REPOSITORY }}/${{ ENV.REGISTRY_REPOS_TAG_NAME }}'
+        echo 'Next step will deploy jfrog artifactory image to openshift'
+      shell: bash
+      
+    - name: Remove Docker temp image
+      run:  |
+        sudo docker rmi ${{ ENV.REGISTRY_URL }}/${{ ENV.REGISTRY_REPOSITORY }}/${{ ENV.REGISTRY_REPOS_TAG_NAME }}:$REGISTRY_REPOS_TAG_VERSION  
+        echo 'Remove docker temp image succeeded.'
+      shell: bash

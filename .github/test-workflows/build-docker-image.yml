@@ -1,0 +1,23 @@
+   
+name: build-docker-image
+
+env:
+  BUILD_JAR: helloWorld-0.0.1-SNAPSHOT.jar
+  
+on:
+  workflow_dispatch:
+
+jobs:
+  build-docker-image-job:
+    runs-on: self-hosted
+    steps:
+    - name: Build the Docker image
+      run:  |
+         sudo docker build --no-cache -t '${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}' -f Dockerfile .
+         echo 'Build docker image succeeded.'
+         echo 'The information of docker image by below:'
+         #docker image ls -f reference="${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}"
+         echo 'Next step will push docker image to jfrog artifactory.'      
+         
+    - name: Clean up old code
+      run:  rm -r ${{ github.workspace }}/target/${{ env.BUILD_JAR }}

@@ -1,0 +1,54 @@
+# This workflow will build source code, build docker image,push docker image to JFrog Artifactory, pull image to openshift by uses actions.
+
+name: Integrated-workflow-openShift
+
+on:
+  workflow_dispatch:
+    inputs:
+      artifactory_registry_version: 
+        required: true
+        type: string
+
+env:
+  ACTIONS_RUNNER_FOLDER: ${{ secrets.ACTIONS_RUNNER_FOLDER }}
+  REGISTRY_URL: ${{ secrets.REGISTRY_URL }}
+  REGISTRY_REPOSITORY: ${{ secrets.REGISTRY_REPOSITORY }}
+  REGISTRY_REPOS_TAG_NAME: ${{ secrets.REGISTRY_REPOS_TAG_NAME }}
+  REGISTRY_REPOS_TAG_VERSION: ${{ github.event.inputs.artifactory_registry_version }}
+  REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
+  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+
+jobs:
+
+  Integrated-workflow-openShift-job:
+  
+    runs-on: [ self-hosted ]
+    
+    steps:
+          
+     - name: Clean up old code
+       run:  rm -rf ${{ ENV.ACTIONS_RUNNER_FOLDER }}/_work/ODC-GithubAction/ODC-GithubAction/*
+      
+     - uses: actions/checkout@v2
+     - name: checkout source code
+       run:  |
+        echo 'Checkout source code succeeded.'
+        echo 'The address of checkout is ${{ ENV.ACTIONS_RUNNER_FOLDER }}/_work/ODC-GithubAction/ODC-GithubAction.'
+        echo 'Next step will build source code.'
+
+
+     #- uses: ./.github/actions/checkout-source-code
+        
+     - uses: ./.github/actions/build-source-code
+        
+     - uses: ./.github/actions/build-docker-image
+        
+     - uses: ./.github/actions/push-image-artifactory
+
+        #- uses: ./.github/actions/pull-image-openshift
+        
+
+        
+
+
+

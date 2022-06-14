@@ -1,0 +1,24 @@
+name: push-image-artifactory
+on:
+  workflow_dispatch:
+
+jobs:
+  push-image-artifactory-job:
+    runs-on: [ self-hosted ]
+    steps:
+    - name: Docker login JFrog Artifactory
+      run:  |
+        sudo docker login -u '${{ secrets.REGISTRY_USER }}' -p '${{ secrets.REGISTRY_PASSWORD }}' ${{ secrets.REGISTRY_URL }}
+        echo 'Login jfrog artifactory succeeded.'
+      
+    - name: Push to JFrog Artifactory
+      run:  |
+        sudo docker push ${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}
+        echo 'Push docker image to jfrog artifactory succeeded.'
+        echo 'The address of jfrog artifactory image is: http://idfvmc1e:8082/artifactory/int_docker_dev/projects/idf/helloworld'
+        echo 'Next step will deploy jfrog artifactory image to openshift'
+      
+    - name: Remove Docker temp image
+      run:  |
+        sudo docker rmi ${{ secrets.REGISTRY_URL }}/${{ secrets.REGISTRY_REPOSITORY }}/${{ secrets.REGISTRY_REPOS_TAG_NAME }}:${{ secrets.REGISTRY_REPOS_TAG_VERSION }}  
+        echo 'Remove docker temp image succeeded.'
